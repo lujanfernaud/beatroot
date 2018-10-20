@@ -174,12 +174,17 @@ RSpec.describe TrackXmlBuilder do
       expect(result).to be_equivalent_to(xml)
     end
 
-    it "does not add RecordLabelName" do
-      json = { "record_labels" => [] }
+    it "adds PLine" do
+      json = { "record_labels" =>
+               [{ "p_line" => "2010 Harrison James Music" }] }
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
         <Track>
+          <PLine>
+            <Year>2010</Year>
+            <PLineText>2010 Harrison James Music</PLineText>
+          </PLine>
         </Track>
       XML
 

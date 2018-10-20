@@ -62,6 +62,13 @@ class TrackXmlBuilder
         if record_label_name
           xml.RecordLabelName record_label_name
         end
+
+        if pline
+          xml.PLine do
+            xml.Year      pline.gsub(/\s\w*/, "")
+            xml.PLineText pline
+          end
+        end
       end
     end
 
@@ -114,6 +121,16 @@ class TrackXmlBuilder
 
       if record_labels.first.present?
         record_labels.first["name"]
+      end
+    end
+
+    def pline
+      record_labels = json["record_labels"]
+
+      return unless record_labels
+
+      if record_labels.first.present?
+        record_labels.first["p_line"]
       end
     end
 end
