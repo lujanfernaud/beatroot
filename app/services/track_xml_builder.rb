@@ -77,6 +77,10 @@ class TrackXmlBuilder
             xml.Genre tag["name"]
           end
         end
+
+        if parental_warning
+          xml.ParentalWarningType json["explicit"] ? "Explicit" : "NotExplicit"
+        end
       end
     end
 
@@ -144,5 +148,9 @@ class TrackXmlBuilder
 
     def tags
       json["tags"]
+    end
+
+    def parental_warning
+      json["explicit"] != nil
     end
 end
