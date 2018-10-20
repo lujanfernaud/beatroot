@@ -7,7 +7,7 @@ class TrackXmlBuilder
 
   def initialize(json)
     @json = json
-    @xml  = Builder::XmlMarkup.new
+    @xml  = Builder::XmlMarkup.new(indent: 2)
   end
 
   def run
@@ -22,6 +22,13 @@ class TrackXmlBuilder
 
     def generate_markup
       xml.Track do
+        if isrc
+          xml.ISRC isrc
+        end
       end
+    end
+
+    def isrc
+      json["isrc"]
     end
 end
