@@ -40,6 +40,15 @@ class TrackXmlBuilder
         if artist_name
           xml.ArtistName artist_name
         end
+
+        if direct_contributors
+          direct_contributors.each do |contributor|
+            xml.Contributor do
+              xml.Name contributor["name"]
+              xml.Role contributor["roles"].join(", ").gsub("Featured", "")
+            end
+          end
+        end
       end
     end
 
@@ -67,5 +76,15 @@ class TrackXmlBuilder
 
     def artist
       json["artist"]
+    end
+
+    def direct_contributors
+      return unless contributors
+
+      contributors.select { |item| item["direct"] == true }
+    end
+
+    def contributors
+      json["contributors"]
     end
 end
