@@ -9,6 +9,10 @@ class Beatroot
     get("#{URL}/tracks")["tracks"]
   end
 
+  def self.track(id)
+    get("#{URL}/tracks/#{id}")["track"]
+  end
+
   def self.get(url)
     HTTParty.get url, headers: { "Authorization" => "Token token=#{TOKEN}" }
   end
