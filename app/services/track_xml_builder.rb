@@ -69,6 +69,14 @@ class TrackXmlBuilder
             xml.PLineText pline
           end
         end
+
+        if tags
+          tags.each do |tag|
+            next if !tag["classification"]["genre"]
+
+            xml.Genre tag["name"]
+          end
+        end
       end
     end
 
@@ -132,5 +140,9 @@ class TrackXmlBuilder
       if record_labels.first.present?
         record_labels.first["p_line"]
       end
+    end
+
+    def tags
+      json["tags"]
     end
 end
