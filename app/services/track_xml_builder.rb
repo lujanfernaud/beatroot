@@ -32,6 +32,10 @@ class TrackXmlBuilder
             xml.SubTitle  json["subtitle"]
           end
         end
+
+        if duration?
+          xml.Duration duration_formatted
+        end
       end
     end
 
@@ -41,5 +45,13 @@ class TrackXmlBuilder
 
     def reference_title?
       json["title"] && json["subtitle"]
+    end
+
+    def duration?
+      json["duration"]
+    end
+
+    def duration_formatted
+      Time.at(json["duration"]).gmtime.strftime("PT%HH%MM%SS")
     end
 end

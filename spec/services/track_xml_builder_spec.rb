@@ -50,5 +50,20 @@ RSpec.describe TrackXmlBuilder do
 
       expect(result).to be_equivalent_to(xml)
     end
+
+    it "adds Duration" do
+      json = { "duration" => 202 }
+
+      xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Track>
+          <Duration>PT00H03M22S</Duration>
+        </Track>
+      XML
+
+      result = TrackXmlBuilder.run(json)
+
+      expect(result).to be_equivalent_to(xml)
+    end
   end
 end
