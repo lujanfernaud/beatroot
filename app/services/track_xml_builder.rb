@@ -25,10 +25,21 @@ class TrackXmlBuilder
         if isrc
           xml.ISRC isrc
         end
+
+        if reference_title?
+          xml.ReferenceTitle do
+            xml.TitleText json["title"]
+            xml.SubTitle  json["subtitle"]
+          end
+        end
       end
     end
 
     def isrc
       json["isrc"]
+    end
+
+    def reference_title?
+      json["title"] && json["subtitle"]
     end
 end
