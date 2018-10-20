@@ -119,5 +119,43 @@ RSpec.describe TrackXmlBuilder do
 
       expect(result).to be_equivalent_to(xml)
     end
+
+    it "adds IndirectContributors" do
+      json = { "contributors" => [
+               { "name"   => "June Blane",
+                 "direct" => false,
+                 "roles"  => ["Composer"] },
+
+               { "name"   => "Marty Ford",
+                 "direct" => false,
+                 "roles"  => ["Lyricist"] },
+
+               { "name"   => "Philip Pike",
+                 "direct" => false,
+                 "roles"  => ["Lyricist"] }
+             ]}
+
+      xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Track>
+          <IndirectContributor>
+            <Name>June Blane</Name>
+            <Role>Composer</Role>
+          </IndirectContributor>
+          <IndirectContributor>
+            <Name>Marty Ford</Name>
+            <Role>Lyricist</Role>
+          </IndirectContributor>
+          <IndirectContributor>
+            <Name>Philip Pike</Name>
+            <Role>Lyricist</Role>
+          </IndirectContributor>
+        </Track>
+      XML
+
+      result = TrackXmlBuilder.run(json)
+
+      expect(result).to be_equivalent_to(xml)
+    end
   end
 end

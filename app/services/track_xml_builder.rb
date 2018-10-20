@@ -49,6 +49,15 @@ class TrackXmlBuilder
             end
           end
         end
+
+        if indirect_contributors
+          indirect_contributors.each do |contributor|
+            xml.IndirectContributor do
+              xml.Name contributor["name"]
+              xml.Role contributor["roles"].join(", ")
+            end
+          end
+        end
       end
     end
 
@@ -86,5 +95,11 @@ class TrackXmlBuilder
 
     def contributors
       json["contributors"]
+    end
+
+    def indirect_contributors
+      return unless contributors
+
+      contributors.select { |item| item["direct"] == false }
     end
 end
