@@ -58,6 +58,10 @@ class TrackXmlBuilder
             end
           end
         end
+
+        if record_label_name
+          xml.RecordLabelName record_label_name
+        end
       end
     end
 
@@ -101,5 +105,15 @@ class TrackXmlBuilder
       return unless contributors
 
       contributors.select { |item| item["direct"] == false }
+    end
+
+    def record_label_name
+      record_labels = json["record_labels"]
+
+      return unless record_labels
+
+      if record_labels.first.present?
+        record_labels.first["name"]
+      end
     end
 end

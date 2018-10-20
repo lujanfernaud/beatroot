@@ -157,5 +157,35 @@ RSpec.describe TrackXmlBuilder do
 
       expect(result).to be_equivalent_to(xml)
     end
+
+    it "adds RecordLabelName" do
+      json = { "record_labels" =>
+               [{ "name" => "Harrison James Music" }] }
+
+      xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Track>
+          <RecordLabelName>Harrison James Music</RecordLabelName>
+        </Track>
+      XML
+
+      result = TrackXmlBuilder.run(json)
+
+      expect(result).to be_equivalent_to(xml)
+    end
+
+    it "does not add RecordLabelName" do
+      json = { "record_labels" => [] }
+
+      xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Track>
+        </Track>
+      XML
+
+      result = TrackXmlBuilder.run(json)
+
+      expect(result).to be_equivalent_to(xml)
+    end
   end
 end
