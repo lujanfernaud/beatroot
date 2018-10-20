@@ -193,6 +193,25 @@ RSpec.describe TrackXmlBuilder do
       expect(result).to be_equivalent_to(xml)
     end
 
+    it "adds Genres" do
+      json = { "tags" => [
+               { "name" => "Dance",      "classification" => "genre" },
+               { "name" => "Tech House", "classification" => "genre" },
+             ] }
+
+      xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Track>
+          <Genre>Dance</Genre>
+          <Genre>Tech House</Genre>
+        </Track>
+      XML
+
+      result = TrackXmlBuilder.run(json)
+
+      expect(result).to be_equivalent_to(xml)
+    end
+
     it "adds Explicit ParentalWarningType" do
       json = { "explicit" => true }
 
