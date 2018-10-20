@@ -9,9 +9,8 @@ RSpec.feature "Tracks", type: :feature do
     end
 
     it "shows list of tracks" do
-      url     = "#{Beatroot::URL}/tracks"
-      token   = Beatroot::TOKEN
-      headers = { headers: { "Authorization" => "Token token=#{token}" } }
+      url     = ApiHelpers::url
+      headers = ApiHelpers::headers
       tracks  = { "tracks" => [{
         "artist" => { "name" => "Rebecca Ferguson" },
         "full_title" => "Too Good To Lose"}] }
