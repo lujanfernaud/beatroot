@@ -1,3 +1,7 @@
 <li class="track__title">
   <%= track["artist"]["name"] %> - <%= track["full_title"] %>
+  <%= link_to "Download XML",
+    xml_downloads_path(id: track["id"]),
+    method: :post,
+    class:  "track__download-xml" %>
 </li>
