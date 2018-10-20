@@ -36,6 +36,10 @@ class TrackXmlBuilder
         if duration?
           xml.Duration duration_formatted
         end
+
+        if artist_name
+          xml.ArtistName artist_name
+        end
       end
     end
 
@@ -53,5 +57,15 @@ class TrackXmlBuilder
 
     def duration_formatted
       Time.at(json["duration"]).gmtime.strftime("PT%HH%MM%SS")
+    end
+
+    def artist_name
+      return unless artist
+
+      artist["name"]
+    end
+
+    def artist
+      json["artist"]
     end
 end

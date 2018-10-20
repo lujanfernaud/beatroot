@@ -65,5 +65,21 @@ RSpec.describe TrackXmlBuilder do
 
       expect(result).to be_equivalent_to(xml)
     end
+
+    it "adds ArtistName" do
+      json = { "artist" =>
+               { "name" => "Tony Crombie feat. Robert Robertson" } }
+
+      xml = <<~XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Track>
+          <ArtistName>Tony Crombie feat. Robert Robertson</ArtistName>
+        </Track>
+      XML
+
+      result = TrackXmlBuilder.run(json)
+
+      expect(result).to be_equivalent_to(xml)
+    end
   end
 end
