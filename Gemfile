@@ -25,6 +25,7 @@ gem "bulma-rails",             '~> 0.7.2'
 group :development, :test do
   gem 'pry-byebug',            '~> 3.6'
   gem 'rspec-rails',           '~> 3.8'
+  gem 'rubocop-rails_config',  '~> 0.2.5'
 
   # Limit connections to API.
   gem 'vcr',                   '~> 4.0'
