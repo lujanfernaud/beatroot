@@ -5,7 +5,7 @@
   </td>
 
   <td class="track__button table__td">
-    <%= link_to "Download XML &#11123;".html_safe,
+    <%= link_to "Download XML #{download_symbol}".html_safe,
       xml_downloads_path(id: track["id"]),
       method: :post,
       class:  "track__download-xml button" %>
