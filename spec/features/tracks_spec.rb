@@ -21,7 +21,7 @@ RSpec.feature "Tracks", type: :feature do
 
       visit root_path
 
-      within ".track__title" do
+      within ".track" do
         expect(page).to have_content("Rebecca Ferguson - Too Good To Lose")
         expect(page).to have_link("Download XML")
       end

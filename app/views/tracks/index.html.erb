@@ -1,5 +1,13 @@
-<h1>Tracks</h1>
+<section class="section">
+  <div class="container">
 
-<ul>
-  <%= render partial: "track", collection: @tracks %>
-</ul>
+    <h1 class="title is-1">Tracks</h1>
+
+    <table class="table is-striped is-hoverable is-fullwidth">
+      <tbody>
+        <%= render partial: "track", collection: @tracks %>
+      </tbody>
+    </table>
+
+  </div>
+</section>

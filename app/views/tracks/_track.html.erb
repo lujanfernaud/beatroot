@@ -1,7 +1,14 @@
-<li class="track__title">
-  <%= track["artist"]["name"] %> - <%= track["full_title"] %>
-  <%= link_to "Download XML",
-    xml_downloads_path(id: track["id"]),
-    method: :post,
-    class:  "track__download-xml" %>
-</li>
+<tr class="track">
+
+  <td class="track__title table__td">
+    <%= track["artist"]["name"] %> - <%= track["full_title"] %>
+  </td>
+
+  <td class="track__button table__td">
+    <%= link_to "Download XML &#11123;".html_safe,
+      xml_downloads_path(id: track["id"]),
+      method: :post,
+      class:  "track__download-xml button" %>
+  </td>
+
+</tr>
