@@ -73,7 +73,7 @@ class TrackDecorator
   end
 
   def tags
-    track["tags"]
+    create_tags_array
   end
 
   def parental_warning
@@ -115,5 +115,13 @@ class TrackDecorator
       pline = record_labels_array["p_line"]
 
       OpenStruct.new(year: pline.gsub(/\s\w*/, ""), text: pline)
+    end
+
+    def create_tags_array
+      return unless track["tags"]
+
+      track["tags"].map do |tag|
+        tag["name"] if tag["classification"] == "genre"
+      end
     end
 end

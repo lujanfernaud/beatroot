@@ -134,9 +134,7 @@ RSpec.describe TrackDecorator do
                { "name" => "Tech House", "classification" => "genre" },
              ] }
 
-      tags = [ { "classification" => "genre", "name" => "Dance" },
-               { "classification" => "genre", "name" => "Tech House" } ]
-
+      tags = ["Dance", "Tech House"]
 
       track_decorated = TrackDecorator.new(json)
 

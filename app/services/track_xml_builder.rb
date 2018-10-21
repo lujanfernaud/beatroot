@@ -72,9 +72,7 @@ class TrackXmlBuilder
 
         if tags
           tags.each do |tag|
-            next if !tag["classification"]["genre"]
-
-            xml.Genre tag["name"]
+            xml.Genre tag
           end
         end
 
