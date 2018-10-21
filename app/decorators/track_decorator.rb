@@ -43,7 +43,9 @@ class TrackDecorator
   def direct_contributors
     return unless contributors
 
-    contributors.select { |item| item["direct"] == true }
+    direct_contributors = contributors.select(&direct)
+
+    create_objects_for direct_contributors
   end
 
   def contributors
@@ -87,4 +89,19 @@ class TrackDecorator
   def explicit
     track["explicit"]
   end
+
+  private
+
+    def direct
+      proc { |item| item["direct"] == true }
+    end
+
+    def create_objects_for(contributors)
+      contributors.map do |contributor|
+        OpenStruct.new(
+          name:  contributor["name"],
+          roles: contributor["roles"].join(", ").gsub("Featured", "")
+        )
+      end
+    end
 end

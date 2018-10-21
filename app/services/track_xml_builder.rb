@@ -44,8 +44,8 @@ class TrackXmlBuilder
         if direct_contributors
           direct_contributors.each do |contributor|
             xml.Contributor do
-              xml.Name contributor["name"]
-              xml.Role contributor["roles"].join(", ").gsub("Featured", "")
+              xml.Name contributor.name
+              xml.Role contributor.roles
             end
           end
         end
