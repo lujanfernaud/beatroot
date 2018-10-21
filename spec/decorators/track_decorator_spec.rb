@@ -26,13 +26,13 @@ RSpec.describe TrackDecorator do
       expect(track_decorated.subtitle).to eq(json["subtitle"])
     end
 
-    it "decorates 'duration_formatted'" do
+    it "decorates 'duration'" do
       json = { "duration" => 202 }
-      duration_formatted = "PT00H03M22S"
+      duration = "PT00H03M22S"
 
       track_decorated = TrackDecorator.new(json)
 
-      expect(track_decorated.duration_formatted).to eq(duration_formatted)
+      expect(track_decorated.duration).to eq(duration)
     end
 
     it "decorates 'artist_name'" do

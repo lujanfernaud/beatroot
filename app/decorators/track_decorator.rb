@@ -22,12 +22,10 @@ class TrackDecorator
     track["subtitle"]
   end
 
-  def duration?
-    track["duration"]
-  end
-
-  def duration_formatted
+  def duration
     duration = track["duration"]
+
+    return unless duration
 
     Time.at(duration).gmtime.strftime("PT%HH%MM%SS")
   end

@@ -33,8 +33,8 @@ class TrackXmlBuilder
           end
         end
 
-        if duration?
-          xml.Duration duration_formatted
+        if duration
+          xml.Duration duration
         end
 
         if artist_name
@@ -88,8 +88,7 @@ class TrackXmlBuilder
     delegate :reference_title?,      to: :track
     delegate :title,                 to: :track
     delegate :subtitle,              to: :track
-    delegate :duration?,             to: :track
-    delegate :duration_formatted,    to: :track
+    delegate :duration,              to: :track
     delegate :artist_name,           to: :track
     delegate :direct_contributors,   to: :track
     delegate :indirect_contributors, to: :track

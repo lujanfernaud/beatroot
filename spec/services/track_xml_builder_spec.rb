@@ -55,10 +55,7 @@ RSpec.describe TrackXmlBuilder do
     end
 
     it "adds Duration" do
-      track = OpenStruct.new(
-        duration?: true,
-        duration_formatted: "PT00H03M22S"
-      )
+      track = OpenStruct.new(duration: "PT00H03M22S")
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
