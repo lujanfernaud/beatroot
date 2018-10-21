@@ -141,6 +141,21 @@ RSpec.describe TrackDecorator do
       expect(track_decorated.genres).to eq(genres)
     end
 
+    it "only decorates 'genres' with content" do
+      json = { "tags" => [
+               { "name" => "Dance",           "classification" => "genre" },
+               { "name" => "Tech House",      "classification" => "genre" },
+               { "name" => "Like Dollars",    "classification" => "meaning" },
+               { "name" => "Like Texts From", "classification" => "meaning" },
+             ] }
+
+      genres = ["Dance", "Tech House"]
+
+      track_decorated = TrackDecorator.new(json)
+
+      expect(track_decorated.genres).to eq(genres)
+    end
+
     it "decorates 'explicit'" do
       json = { "explicit" => true }
 

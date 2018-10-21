@@ -122,6 +122,6 @@ class TrackDecorator
 
       track["tags"].map do |tag|
         tag["name"] if tag["classification"] == "genre"
-      end
+      end.compact
     end
 end
