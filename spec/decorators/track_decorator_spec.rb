@@ -156,12 +156,20 @@ RSpec.describe TrackDecorator do
       expect(track_decorated.genres).to eq(genres)
     end
 
-    it "decorates 'explicit'" do
+    it "decorates 'parental_warning' when explicit" do
       json = { "explicit" => true }
 
       track_decorated = TrackDecorator.new(json)
 
-      expect(track_decorated.explicit).to eq(json["explicit"])
+      expect(track_decorated.parental_warning).to eq("Explicit")
+    end
+
+    it "decorates 'parental_warning' when not explicit" do
+      json = { "explicit" => false }
+
+      track_decorated = TrackDecorator.new(json)
+
+      expect(track_decorated.parental_warning).to eq("NotExplicit")
     end
   end
 end

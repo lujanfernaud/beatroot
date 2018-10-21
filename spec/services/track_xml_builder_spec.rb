@@ -221,7 +221,7 @@ RSpec.describe TrackXmlBuilder do
     end
 
     it "adds Explicit ParentalWarningType" do
-      track = OpenStruct.new(parental_warning: true, explicit: true)
+      track = OpenStruct.new(parental_warning: "Explicit")
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -236,7 +236,7 @@ RSpec.describe TrackXmlBuilder do
     end
 
     it "adds NotExplicit ParentalWarningType" do
-      track = OpenStruct.new(parental_warning: true, explicit: false)
+      track = OpenStruct.new(parental_warning: "NotExplicit")
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>

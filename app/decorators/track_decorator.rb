@@ -77,11 +77,9 @@ class TrackDecorator
   end
 
   def parental_warning
-    explicit != nil
-  end
+    return unless parental_warning_is_present
 
-  def explicit
-    track["explicit"]
+    is_explicit ? "Explicit" : "NotExplicit"
   end
 
   private
@@ -123,5 +121,13 @@ class TrackDecorator
       track["tags"].map do |tag|
         tag["name"] if tag["classification"] == "genre"
       end.compact
+    end
+
+    def parental_warning_is_present
+      track["explicit"] != nil
+    end
+
+    def is_explicit
+      track["explicit"]
     end
 end

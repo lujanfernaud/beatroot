@@ -77,7 +77,7 @@ class TrackXmlBuilder
         end
 
         if parental_warning
-          xml.ParentalWarningType explicit ? "Explicit" : "NotExplicit"
+          xml.ParentalWarningType parental_warning
         end
       end
     end
@@ -94,5 +94,4 @@ class TrackXmlBuilder
     delegate :pline,                 to: :track
     delegate :genres,                to: :track
     delegate :parental_warning,      to: :track
-    delegate :explicit,              to: :track
 end
