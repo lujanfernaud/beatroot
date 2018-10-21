@@ -185,7 +185,9 @@ RSpec.describe TrackXmlBuilder do
     end
 
     it "adds PLine" do
-      track = OpenStruct.new(pline: "2010 Harrison James Music")
+      pinfo = "2010 Harrison James Music"
+      pline = OpenStruct.new(year:  pinfo.gsub(/\s\w*/, ""), text: pinfo)
+      track = OpenStruct.new(pline: pline)
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>

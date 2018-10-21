@@ -65,8 +65,8 @@ class TrackXmlBuilder
 
         if pline
           xml.PLine do
-            xml.Year      pline.gsub(/\s\w*/, "")
-            xml.PLineText pline
+            xml.Year      pline.year
+            xml.PLineText pline.text
           end
         end
 

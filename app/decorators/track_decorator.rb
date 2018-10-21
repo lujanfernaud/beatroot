@@ -67,13 +67,9 @@ class TrackDecorator
   end
 
   def pline
-    record_labels = track["record_labels"]
-
     return unless record_labels
 
-    if record_labels.first.present?
-      record_labels.first["p_line"]
-    end
+    create_pline_object if record_labels_array.present?
   end
 
   def tags
@@ -113,5 +109,11 @@ class TrackDecorator
 
     def record_labels_array
       record_labels.first
+    end
+
+    def create_pline_object
+      pline = record_labels_array["p_line"]
+
+      OpenStruct.new(year: pline.gsub(/\s\w*/, ""), text: pline)
     end
 end

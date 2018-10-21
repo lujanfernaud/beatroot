@@ -121,10 +121,11 @@ RSpec.describe TrackDecorator do
     it "decorates 'pline'" do
       pline = "2010 Harrison James Music"
       json  = { "record_labels" => [{ "p_line" => pline }] }
+      pline_object = OpenStruct.new(year: pline.gsub(/\s\w*/, ""), text: pline)
 
       track_decorated = TrackDecorator.new(json)
 
-      expect(track_decorated.pline).to eq(pline)
+      expect(track_decorated.pline).to eq(pline_object)
     end
 
     it "decorates 'tags'" do
