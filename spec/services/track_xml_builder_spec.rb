@@ -205,7 +205,7 @@ RSpec.describe TrackXmlBuilder do
     end
 
     it "adds Genres" do
-      track = OpenStruct.new(tags: ["Dance", "Tech House"])
+      track = OpenStruct.new(genres: ["Dance", "Tech House"])
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>

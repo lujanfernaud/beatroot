@@ -128,17 +128,17 @@ RSpec.describe TrackDecorator do
       expect(track_decorated.pline).to eq(pline_object)
     end
 
-    it "decorates 'tags'" do
+    it "decorates 'genres'" do
       json = { "tags" => [
                { "name" => "Dance",      "classification" => "genre" },
                { "name" => "Tech House", "classification" => "genre" },
              ] }
 
-      tags = ["Dance", "Tech House"]
+      genres = ["Dance", "Tech House"]
 
       track_decorated = TrackDecorator.new(json)
 
-      expect(track_decorated.tags).to eq(tags)
+      expect(track_decorated.genres).to eq(genres)
     end
 
     it "decorates 'explicit'" do

@@ -70,9 +70,9 @@ class TrackXmlBuilder
           end
         end
 
-        if tags
-          tags.each do |tag|
-            xml.Genre tag
+        if genres
+          genres.each do |genre|
+            xml.Genre genre
           end
         end
 
@@ -92,7 +92,7 @@ class TrackXmlBuilder
     delegate :indirect_contributors, to: :track
     delegate :record_label_name,     to: :track
     delegate :pline,                 to: :track
-    delegate :tags,                  to: :track
+    delegate :genres,                to: :track
     delegate :parental_warning,      to: :track
     delegate :explicit,              to: :track
 end

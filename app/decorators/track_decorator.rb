@@ -72,8 +72,8 @@ class TrackDecorator
     create_pline_object if record_labels_array.present?
   end
 
-  def tags
-    create_tags_array
+  def genres
+    create_genres_array
   end
 
   def parental_warning
@@ -117,7 +117,7 @@ class TrackDecorator
       OpenStruct.new(year: pline.gsub(/\s\w*/, ""), text: pline)
     end
 
-    def create_tags_array
+    def create_genres_array
       return unless track["tags"]
 
       track["tags"].map do |tag|
