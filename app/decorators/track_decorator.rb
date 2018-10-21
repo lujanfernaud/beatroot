@@ -61,13 +61,9 @@ class TrackDecorator
   end
 
   def record_label_name
-    record_labels = track["record_labels"]
-
     return unless record_labels
 
-    if record_labels.first.present?
-      record_labels.first["name"]
-    end
+    record_labels_array["name"] if record_labels_array.present?
   end
 
   def pline
@@ -109,5 +105,13 @@ class TrackDecorator
           roles: contributor["roles"].join(", ").gsub("Featured", "")
         )
       end
+    end
+
+    def record_labels
+      track["record_labels"]
+    end
+
+    def record_labels_array
+      record_labels.first
     end
 end
