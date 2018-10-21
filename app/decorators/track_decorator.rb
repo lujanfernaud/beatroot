@@ -23,11 +23,9 @@ class TrackDecorator
   end
 
   def duration
-    duration = track["duration"]
+    return unless track_duration
 
-    return unless duration
-
-    Time.at(duration).gmtime.strftime("PT%HH%MM%SS")
+    Time.at(track_duration).gmtime.strftime("PT%HH%MM%SS")
   end
 
   def artist_name
@@ -36,20 +34,12 @@ class TrackDecorator
     artist["name"]
   end
 
-  def artist
-    track["artist"]
-  end
-
   def direct_contributors
     return unless contributors
 
     direct_contributors = contributors.select(&direct)
 
     create_objects_for direct_contributors
-  end
-
-  def contributors
-    track["contributors"]
   end
 
   def indirect_contributors
@@ -83,6 +73,18 @@ class TrackDecorator
   end
 
   private
+
+    def track_duration
+      track["duration"]
+    end
+
+    def artist
+      track["artist"]
+    end
+
+    def contributors
+      track["contributors"]
+    end
 
     def direct
       proc { |item| item["direct"] == true }
