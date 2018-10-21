@@ -19,9 +19,6 @@ gem 'figaro',                  '~> 1.1', '>= 1.1.1'
 # Consume restful web services.
 gem 'httparty',                '~> 0.16.2'
 
-# Base styling.
-gem "bulma-rails",             '~> 0.7.2'
-
 group :development, :test do
   gem 'pry-byebug',            '~> 3.6'
   gem 'rspec-rails',           '~> 3.8'
