@@ -1,13 +1,13 @@
 require "builder"
 
 class TrackXmlBuilder
-  def self.run(json)
-    new(json).run
+  def self.run(track)
+    new(track).run
   end
 
-  def initialize(json)
-    @json = json
-    @xml  = Builder::XmlMarkup.new(indent: 2)
+  def initialize(track)
+    @track = track
+    @xml   = Builder::XmlMarkup.new(indent: 2)
   end
 
   def run
@@ -18,7 +18,7 @@ class TrackXmlBuilder
 
   private
 
-    attr_reader :xml, :json
+    attr_reader :xml, :track
 
     def generate_markup
       xml.Track do
@@ -28,8 +28,8 @@ class TrackXmlBuilder
 
         if reference_title?
           xml.ReferenceTitle do
-            xml.TitleText json["title"]
-            xml.SubTitle  json["subtitle"]
+            xml.TitleText title
+            xml.SubTitle  subtitle
           end
         end
 
@@ -79,78 +79,23 @@ class TrackXmlBuilder
         end
 
         if parental_warning
-          xml.ParentalWarningType json["explicit"] ? "Explicit" : "NotExplicit"
+          xml.ParentalWarningType explicit ? "Explicit" : "NotExplicit"
         end
       end
     end
 
-    def isrc
-      json["isrc"]
-    end
-
-    def reference_title?
-      json["title"] && json["subtitle"]
-    end
-
-    def duration?
-      json["duration"]
-    end
-
-    def duration_formatted
-      Time.at(json["duration"]).gmtime.strftime("PT%HH%MM%SS")
-    end
-
-    def artist_name
-      return unless artist
-
-      artist["name"]
-    end
-
-    def artist
-      json["artist"]
-    end
-
-    def direct_contributors
-      return unless contributors
-
-      contributors.select { |item| item["direct"] == true }
-    end
-
-    def contributors
-      json["contributors"]
-    end
-
-    def indirect_contributors
-      return unless contributors
-
-      contributors.select { |item| item["direct"] == false }
-    end
-
-    def record_label_name
-      record_labels = json["record_labels"]
-
-      return unless record_labels
-
-      if record_labels.first.present?
-        record_labels.first["name"]
-      end
-    end
-
-    def pline
-      record_labels = json["record_labels"]
-
-      return unless record_labels
-
-      if record_labels.first.present?
-        record_labels.first["p_line"]
-      end
-    end
-
-    def tags
-      json["tags"]
-    end
-
-    def parental_warning
-      json["explicit"] != nil
-    end
+    delegate :isrc,                  to: :track
+    delegate :reference_title?,      to: :track
+    delegate :title,                 to: :track
+    delegate :subtitle,              to: :track
+    delegate :duration?,             to: :track
+    delegate :duration_formatted,    to: :track
+    delegate :artist_name,           to: :track
+    delegate :direct_contributors,   to: :track
+    delegate :indirect_contributors, to: :track
+    delegate :record_label_name,     to: :track
+    delegate :pline,                 to: :track
+    delegate :tags,                  to: :track
+    delegate :parental_warning,      to: :track
+    delegate :explicit,              to: :track
 end

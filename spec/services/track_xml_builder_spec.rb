@@ -3,22 +3,22 @@ require 'rails_helper'
 RSpec.describe TrackXmlBuilder do
   describe "default behaviour" do
     it "has version, encoding, and 'Track' as root" do
-      json = {}
+      track = OpenStruct.new()
       xml  = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
         <Track>
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
   end
 
-  context "with track json" do
+  context "with track object" do
     it "adds ISRC" do
-      json = { "isrc" => "GBG3H1000203" }
+      track = OpenStruct.new(isrc: "GBG3H1000203")
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -27,32 +27,38 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds ReferenceTitle" do
-      json = { "title"    => "Back To Life",
-               "subtitle" => "(1Xtra Live Lounge)" }
+      track = OpenStruct.new(
+        reference_title?: true,
+        title:    "Sweet Lorraine",
+        subtitle: "live at the O2"
+      )
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
         <Track>
           <ReferenceTitle>
-            <TitleText>Back To Life</TitleText>
-            <SubTitle>(1Xtra Live Lounge)</SubTitle>
+            <TitleText>Sweet Lorraine</TitleText>
+            <SubTitle>live at the O2</SubTitle>
           </ReferenceTitle>
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds Duration" do
-      json = { "duration" => 202 }
+      track = OpenStruct.new(
+        duration?: true,
+        duration_formatted: "PT00H03M22S"
+      )
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -61,14 +67,16 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds ArtistName" do
-      json = { "artist" =>
-               { "name" => "Tony Crombie feat. Robert Robertson" } }
+      track = OpenStruct.new(
+        artist: true,
+        artist_name: "Tony Crombie feat. Robert Robertson"
+      )
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -77,25 +85,26 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds Contributors" do
-      json = { "contributors" => [
-               { "name"   => "Tony Crombie",
-                 "direct" => true,
-                 "roles"  => ["Artist"] },
+      track = OpenStruct.new(
+        contributors: true,
+        direct_contributors: [ { "direct" => true,
+                                "name"   => "Tony Crombie",
+                                "roles"  => ["Artist"] },
 
-               { "name"   => "Robert Robertson",
-                 "direct" => true,
-                 "roles"  => ["FeaturedArtist"] },
+                              { "direct" => true,
+                                "name"   => "Robert Robertson",
+                                "roles"  => ["FeaturedArtist"] },
 
-               { "name"   => "Bill Wallis",
-                 "direct" => true,
-                 "roles"  => ["Mixer"] }
-             ]}
+                              { "direct" => true,
+                                "name"   => "Bill Wallis",
+                                "roles"  => ["Mixer"] } ]
+      )
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -115,25 +124,26 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds IndirectContributors" do
-      json = { "contributors" => [
-               { "name"   => "June Blane",
-                 "direct" => false,
-                 "roles"  => ["Composer"] },
+      track = OpenStruct.new(
+        contributors: true,
+        indirect_contributors: [ { "direct" => false,
+                                   "name"   => "June Blane",
+                                   "roles"  => ["Composer"] },
 
-               { "name"   => "Marty Ford",
-                 "direct" => false,
-                 "roles"  => ["Lyricist"] },
+                                 { "direct" => false,
+                                   "name"   => "Marty Ford",
+                                   "roles"  => ["Lyricist"] },
 
-               { "name"   => "Philip Pike",
-                 "direct" => false,
-                 "roles"  => ["Lyricist"] }
-             ]}
+                                 { "direct" => false,
+                                   "name"   => "Philip Pike",
+                                   "roles"  => ["Lyricist"] } ]
+      )
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -153,14 +163,13 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds RecordLabelName" do
-      json = { "record_labels" =>
-               [{ "name" => "Harrison James Music" }] }
+      track = OpenStruct.new(record_label_name: "Harrison James Music")
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -169,14 +178,13 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds PLine" do
-      json = { "record_labels" =>
-               [{ "p_line" => "2010 Harrison James Music" }] }
+      track = OpenStruct.new(pline: "2010 Harrison James Music")
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -188,16 +196,16 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds Genres" do
-      json = { "tags" => [
-               { "name" => "Dance",      "classification" => "genre" },
-               { "name" => "Tech House", "classification" => "genre" },
-             ] }
+      track = OpenStruct.new(
+        tags: [ { "classification" => "genre", "name" => "Dance" },
+                { "classification" => "genre", "name" => "Tech House" } ]
+      )
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -207,13 +215,13 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds Explicit ParentalWarningType" do
-      json = { "explicit" => true }
+      track = OpenStruct.new(parental_warning: true, explicit: true)
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -222,13 +230,13 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
 
     it "adds NotExplicit ParentalWarningType" do
-      json = { "explicit" => false }
+      track = OpenStruct.new(parental_warning: true, explicit: false)
 
       xml = <<~XML
         <?xml version="1.0" encoding="UTF-8"?>
@@ -237,7 +245,7 @@ RSpec.describe TrackXmlBuilder do
         </Track>
       XML
 
-      result = TrackXmlBuilder.run(json)
+      result = TrackXmlBuilder.run(track)
 
       expect(result).to be_equivalent_to(xml)
     end
