@@ -1,0 +1,39 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=dae8bd7572a3f96b01efeda5ffbbdff93bfaee020ba672af9da62824688e9af0
+
+language: ruby
+
+rvm:
+  - 2.5.3
+
+sudo: required
+
+dist: trusty
+
+addons:
+  postgresql: 9.6
+
+services:
+  - postgresql
+
+cache:
+  bundler: true
+  yarn: true
+
+before_script:
+  - bundle install
+  - psql -c 'create database "beatroot-api_test";' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - xvfb-run -a bundle exec rspec
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+test:
+  adapter: postgresql
+  database: beatroot-api_test
