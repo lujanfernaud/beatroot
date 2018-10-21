@@ -55,7 +55,9 @@ class TrackDecorator
   def indirect_contributors
     return unless contributors
 
-    contributors.select { |item| item["direct"] == false }
+    indirect_contributors = contributors.select(&indirect)
+
+    create_objects_for indirect_contributors
   end
 
   def record_label_name
@@ -94,6 +96,10 @@ class TrackDecorator
 
     def direct
       proc { |item| item["direct"] == true }
+    end
+
+    def indirect
+      proc { |item| item["direct"] == false }
     end
 
     def create_objects_for(contributors)

@@ -131,17 +131,19 @@ RSpec.describe TrackXmlBuilder do
     it "adds IndirectContributors" do
       track = OpenStruct.new(
         contributors: true,
-        indirect_contributors: [ { "direct" => false,
-                                   "name"   => "June Blane",
-                                   "roles"  => ["Composer"] },
+        indirect_contributors: [
+                                 OpenStruct.new(
+                                   name:  "June Blane",
+                                   roles: "Composer"),
 
-                                 { "direct" => false,
-                                   "name"   => "Marty Ford",
-                                   "roles"  => ["Lyricist"] },
+                                 OpenStruct.new(
+                                   name:  "Marty Ford",
+                                   roles: "Lyricist"),
 
-                                 { "direct" => false,
-                                   "name"   => "Philip Pike",
-                                   "roles"  => ["Lyricist"] } ]
+                                 OpenStruct.new(
+                                   name:  "Philip Pike",
+                                   roles: "Lyricist")
+                               ]
       )
 
       xml = <<~XML

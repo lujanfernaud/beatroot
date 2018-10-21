@@ -91,17 +91,17 @@ RSpec.describe TrackDecorator do
                  "roles"  => ["Mixer"] }
              ] }
 
-      indirect_contributors = [ { "direct" => false,
-                                  "name"   => "Tony Crombie",
-                                  "roles"  => ["Artist"] },
+      indirect_contributors = [ OpenStruct.new(
+                                  name:  "Tony Crombie",
+                                  roles: "Artist"),
 
-                                { "direct" => false,
-                                  "name"   => "Robert Robertson",
-                                  "roles"  => ["FeaturedArtist"] },
+                                OpenStruct.new(
+                                  name:  "Robert Robertson",
+                                  roles: "Artist"),
 
-                                { "direct" => false,
-                                  "name"   => "Bill Wallis",
-                                  "roles"  => ["Mixer"] } ]
+                                OpenStruct.new(
+                                  name:  "Bill Wallis",
+                                  roles: "Mixer") ]
 
       track_decorated = TrackDecorator.new(json)
 
