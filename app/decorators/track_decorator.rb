@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Decorates track's json.
 class TrackDecorator
   attr_reader :track

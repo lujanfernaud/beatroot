@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class XmlDownloadsController < ApplicationController
   def create
     id = params[:id]
